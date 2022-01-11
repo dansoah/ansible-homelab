@@ -1,0 +1,63 @@
+---
+
+- name: Install CRI-O
+  hosts: kubernetes
+  become: true
+
+  vars:
+    crio_version: 1.18
+
+  tasks:
+
+    - name: Check for buster backports repository
+      ansible.builtin.apt_repository:
+        repo: deb http://deb.debian.org/debian buster-backports main
+        state: present
+
+    - name: Check for libcontainers repository
+      ansible.builtin.apt_repository:
+        repo: "deb [signed-by=/usr/share/keyrings/libcontainers-archive-keyring.gpg] https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/x{{ ansible_distribution }}_{{ ansible_distribution_version }}/ /"
+        state: present
+        update_cache: false
+      register: add_libcontainers_repo
+
+    - name: Check for libcontainers / CRI-O repository
+      ansible.builtin.apt_repository:
+        repo: "deb [signed-by=/usr/share/keyrings/libcontainers-crio-archive-keyring.gpg] https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable:/cri-o:/{{ crio_version }}/x{{ ansible_distribution }}_{{ ansible_distribution_version }}/ /"
+        state: present
+        update_cache: false
+      register: add_libcontainers_crio_repo
+        
+    - name: Add keys for libcontainers repository
+      ansible.builtin.apt_key:
+        url: "https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/x{{ ansible_distribution }}_{{ ansible_distribution_version }}/Release.key"
+        keyring: /usr/share/keyrings/libcontainers-archive-keyring.gpg
+  
+    - name: Add keys for libcontainers / CRI-O repository
+      ansible.builtin.apt_key:
+        url: "https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable:/cri-o:/{{ crio_version }}/x{{ ansible_distribution }}_{{ ansible_distribution_version }}/Release.key"
+        keyring: /usr/share/keyrings/libcontainers-crio-archive-keyring.gpg
+
+    - name: Update cache
+      apt:
+        update_cache: true
+
+    - name: Install buster backports
+      apt:
+        default_release: buster-backports
+        state: present
+
+    - name: Install libseccomp2
+      apt:
+        name: libseccomp2
+        state: latest
+
+    - name: Install cri-o
+      apt:
+        name: cri-o
+        state: latest
+
+    - name: Install cri-o-runc
+      apt:
+        name: cri-o-runc
+        state: latest
