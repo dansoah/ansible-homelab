@@ -1,0 +1,5 @@
+[ubuntu_hosts]
+k8sm-01
+
+[kubernetes_master]
+k8sm-01

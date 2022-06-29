@@ -1,0 +1,31 @@
+---
+- name: Install buster backports
+  apt:
+    default_release: buster-backports
+    state: present
+
+- name: Install libseccomp2
+  apt:
+    name: libseccomp2
+    state: latest
+
+- name: Install cri-o
+  apt:
+    name: cri-o
+    state: latest
+
+- name: Install cri-o-runc
+  apt:
+    name: cri-o-runc
+    state: latest
+
+- name: Enable CRI-O
+  ansible.builtin.systemd:
+    name: crio
+    enabled: true
+
+- name: Start CRI-O
+  ansible.builtin.systemd:
+    state: started
+    daemon_reload: true
+    name: crio

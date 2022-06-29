@@ -1,0 +1,13 @@
+---
+
+- name: Copy kubeadm config file to remote host
+  copy:
+    src: ./files/kubeadm-config.yaml
+    dest: /home/ubuntu/kubeadm-config.yaml
+
+- name: Init Kubeadm
+  shell: |
+    kubeadm init \
+    --config=/home/ubuntu/kubeadm-config.yaml \
+    --upload-certs \
+

@@ -1,0 +1,16 @@
+---
+- name: Check for Kubernetes archive
+  ansible.builtin.apt_repository:
+    repo: "deb [signed-by=/usr/share/keyrings/kubernetes-archive-keyring.gpg] https://apt.kubernetes.io/ kubernetes-xenial main"
+    state: present
+    update_cache: false
+
+- name: Add keys for kubernetes archive
+  ansible.builtin.apt_key:
+    url: "https://packages.cloud.google.com/apt/doc/apt-key.gpg"
+    keyring: /usr/share/keyrings/kubernetes-archive-keyring.gpg
+    state: present
+    
+- name: Update cache
+  apt:
+    update_cache: true

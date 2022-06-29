@@ -1,0 +1,28 @@
+---
+- name: Config modprobe and sysctl
+  include_tasks: preconfig.yaml
+
+- name: Configure kubelet
+  include_tasks: configure_kubelet.yaml
+
+- name: Require software-properties-common package
+  include_tasks: require_software_properties_common.yaml
+
+- name: Add Kubernetes repositories
+  include_tasks: add_kubernetes_repositories.yaml
+
+- name: Install Kubernetes
+  include_tasks: install_kubernetes.yaml
+
+- name: Check wether kubeadm has already been initialized
+  stat:
+    path: "/etc/kubernetes/pki/ca.key"
+  register: node_ca
+
+- name: Start kubeadm
+  include_tasks: kubeadm_init.yaml
+  when: not node_ca.stat.exists
+  run_once: true
+
+
+    

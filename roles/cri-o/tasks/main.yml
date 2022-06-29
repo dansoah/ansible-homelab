@@ -1,0 +1,9 @@
+---
+- name: Add CRI-O repositories
+  include_tasks: add_cri_o_repositories.yaml
+  
+- name: Install CRI-O
+  include_tasks: install_cri_o.yaml
+  tags:
+    - cri-o_install
+  

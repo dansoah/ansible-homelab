@@ -1,0 +1,14 @@
+---
+- name: Create .kube folder
+  ansible.builtin.file:
+    path: /home/ubuntu/.kube
+    state: directory
+    mode: '0755'
+
+- name: Copy config file to .kube folder
+  copy:
+    source: /etc/kubernetes/admin.conf
+    dest: /home/ubuntu/.kube/config
+
+- name: Update permissions on config folder
+  shell: chown $(id -u):$(id -g) /home/ubuntu/.kube/config

@@ -1,0 +1,9 @@
+---
+# @description: Creates kubernetes master servers using CRI-O engine
+- hosts: kubernetes_master
+  become: true
+  vars:
+    crio_version: 1.18
+  roles:
+    - cri-o
+    - kubernetes
