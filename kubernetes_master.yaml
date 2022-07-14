@@ -4,6 +4,7 @@
   become: true
   vars:
     crio_version: 1.18
+    kube_version: 1.23.6-00
   roles:
     - cri-o
     - kubernetes

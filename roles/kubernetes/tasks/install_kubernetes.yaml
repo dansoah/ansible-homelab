@@ -1,21 +1,21 @@
 ---
 - name: Install kubeadm
   package:
-    name: kubeadm=1.23.6-00
+    name: kubeadm={{ kube_version }}
     state: present
     allow_downgrade: yes
     update_cache: true
 
 - name: Install kubelet
   package:
-    name: kubelet=1.23.6-00
+    name: kubelet={{ kube_version }}
     state: present
     allow_downgrade: yes
     update_cache: true
 
 - name: Install kubectl
   package:
-    name: kubectl=1.23.6-00
+    name: kubectl={{ kube_version }}
     state: present
     allow_downgrade: yes
     update_cache: true
