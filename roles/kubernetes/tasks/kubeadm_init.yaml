@@ -6,8 +6,8 @@
     dest: /home/ubuntu/kubeadm-config.yaml
 
 - name: Init Kubeadm
+  become: true
   shell: |
     kubeadm init \
     --config=/home/ubuntu/kubeadm-config.yaml \
-    --upload-certs \
-
+    --upload-certs
