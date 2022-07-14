@@ -1,18 +1,21 @@
 ---
 - name: Install kubeadm
   package:
-    name: kubeadm
-    state: latest
+    name: kubeadm=1.23.6-00
+    state: present
+    allow_downgrade: yes
     update_cache: true
 
 - name: Install kubelet
   package:
-    name: kubelet
-    state: latest
+    name: kubelet=1.23.6-00
+    state: present
+    allow_downgrade: yes
     update_cache: true
 
 - name: Install kubectl
   package:
-    name: kubectl
-    state: latest
+    name: kubectl=1.23.6-00
+    state: present
+    allow_downgrade: yes
     update_cache: true
