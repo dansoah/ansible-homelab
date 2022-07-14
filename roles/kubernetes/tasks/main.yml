@@ -18,8 +18,8 @@
 
 - name: Start kubeadm
   include_tasks: kubeadm_init.yaml
-  #when: not node_ca.stat.exists
-  #run_once: true
+  when: not node_ca.stat.exists
+  run_once: true
 
 
     
