@@ -1,5 +1,0 @@
----
-- name: Copy kubelet config file
-  copy:
-    src: ./files/kubelet.conf
-    dest: /etc/default/kubelet
