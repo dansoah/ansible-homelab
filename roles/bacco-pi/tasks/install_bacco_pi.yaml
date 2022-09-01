@@ -1,0 +1,22 @@
+- name: Check if previous bacco-pi has been installed
+  stat:
+    path: "{{ bacco_pi_install_location }}"
+  register: bacco_pi_install_folder
+
+- name: Delete previous bacco-pi folder
+  file:
+    path: "{{ bacco_pi_install_location }}"
+    state: absent
+  when: bacco_pi_install_folder.stat.exists
+
+- name: Create install folder
+  file:
+    path: "{{ bacco_pi_install_location }}"
+    state: directory
+
+- name: Move files to install folder
+  ansible.builtin.copy:
+    src: "{{ bacco_pi_maneuver_dir }}/bacco-pi-master/"
+    dest: "{{ bacco_pi_install_location }}"
+    remote_src: yes
+    force: yes

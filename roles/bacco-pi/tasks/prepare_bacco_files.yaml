@@ -1,0 +1,26 @@
+- name: Check if previous bacco-pi maneuver has been created
+  stat:
+    path: "{{ bacco_pi_maneuver_dir }}"
+  register: bacco_pi_folder
+
+- name: Delete previous bacco-pi maneuver folder
+  file:
+    path: "{{ bacco_pi_maneuver_dir }}"
+    state: absent
+  when: bacco_pi_folder.stat.exists
+
+- name: Create bacco-pi maneuver folder
+  file:
+    path: "{{ bacco_pi_maneuver_dir }}"
+    state: directory
+
+- name: Download bacco-pi latest version
+  ansible.builtin.get_url:
+    url: "{{ bacco_pi_download_url }}"
+    dest: "{{ bacco_pi_maneuver_dir }}/source.zip"
+
+- name: Unzip bacco-pi
+  ansible.builtin.unarchive:
+    src: "{{ bacco_pi_maneuver_dir }}/source.zip"
+    remote_src: yes
+    dest: "{{ bacco_pi_maneuver_dir }}"

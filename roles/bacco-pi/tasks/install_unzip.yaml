@@ -1,0 +1,6 @@
+
+- name: Install unzip utility
+  package:
+    name: unzip
+    state: present
+    update_cache: true

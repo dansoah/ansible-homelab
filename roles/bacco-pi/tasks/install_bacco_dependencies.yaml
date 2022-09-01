@@ -1,0 +1,5 @@
+---
+- name: Install python dependencies defined in Pipfile
+  shell: pip install -r requirements.txt
+  args:
+    chdir: "{{ bacco_pi_install_location }}"

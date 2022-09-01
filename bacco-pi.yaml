@@ -1,0 +1,8 @@
+---
+# @description: Enables bacco-pi on raspiberry pi hosts
+- hosts: raspberry_pi
+  become: true
+  vars:
+    bacco_pi_url: https://github.com/dansoah/bacco-pi/archive/refs/heads/master.zip
+  roles:
+    - bacco-pi

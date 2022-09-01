@@ -1,0 +1,11 @@
+---
+- name: Install system dependencies
+  block:
+    - include_tasks: install_pip.yaml
+    - include_tasks: install_unzip.yaml
+
+- name: Install Bacco Pi
+  block:
+    - include_tasks: prepare_bacco_files.yaml
+    - include_tasks: install_bacco_pi.yaml
+    - include_tasks: install_bacco_dependencies.yaml

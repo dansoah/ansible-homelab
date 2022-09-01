@@ -1,0 +1,6 @@
+
+- name: Install PIP
+  package:
+    name: python3-pip
+    state: present
+    update_cache: true
