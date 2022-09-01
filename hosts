@@ -1,5 +1,12 @@
 [ubuntu_hosts]
 k8sm-01
 
+[openwrt_hosts]
+owrt-01
+
 [kubernetes_master]
+k8sm-01
+
+[raspberry_pi]
+owrt-01
 k8sm-01
