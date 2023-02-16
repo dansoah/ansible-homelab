@@ -1,0 +1,38 @@
+- name: Pre install tasks
+  block:
+    - import_tasks: create_users.yaml
+    - import_tasks: prepare_prometheus_installer.yaml
+    - import_tasks: prepare_nodeexporter_installer.yaml
+
+- name: Install Prometheus
+  block:
+    - import_tasks: copy_prometheus_binaries.yaml
+    - import_tasks: create_prometheus_service.yaml
+    - name: Create /var/lib/prometheus directory
+      file:
+        path: /var/lib/prometheus
+        owner: prometheus
+        group: prometheus
+        mode: 0751
+        state: directory
+
+- name: Install node_exporter
+  block: 
+    - import_tasks: copy_nodeexporter_binaries.yaml
+    - import_tasks: create_nodeexporter_service.yaml
+
+
+
+
+
+- name: Configure prometheus to use node_exporter
+  lineinfile:
+    path: /etc/prometheus/prometheus.yml
+    line: "  - job_name: \"node_exporter\"\n    static_configs:\n      - targets: [\"{{ inventory_hostname }}:9100\"]"
+
+- name: Restarts prometheus service
+  systemd:
+    state: restarted
+    enabled: true
+    daemon_reload: true
+    name: prometheus

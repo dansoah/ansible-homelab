@@ -1,0 +1,52 @@
+- name: Copy prometheus binary to /usr/local/bin
+  shell: "cp /home/prometheus/prometheus-*.linux-*/prometheus /usr/local/bin"
+
+- name: Copy promtool binary to /usr/local/bin
+  shell: "cp /home/prometheus/prometheus-*.linux-*/promtool /usr/local/bin"
+
+- name: Define prometheus as owner of /usr/local/bin/prometheus
+  file:
+    path: /usr/local/bin/prometheus
+    owner: prometheus
+    group: prometheus
+
+- name: Define prometheus as owner of /usr/local/bin/promtool
+  file:
+    path: /usr/local/bin/promtool
+    owner: prometheus
+    group: prometheus
+
+- name: Create /etc/prometheus dir
+  file:
+    path: /etc/prometheus
+    owner: prometheus
+    group: prometheus
+    mode: '660'
+    state: directory
+
+- name: Copy prometheus consoles to /etc/prometheus
+  shell: "cp -r /home/prometheus/prometheus-*.linux-*/consoles /etc/prometheus"
+
+- name: Copyprometheus console_libraries to /etc/prometheus
+  shell: "cp -r /home/prometheus/prometheus-*.linux-*/console_libraries /etc/prometheus"
+
+- name: Define prometheus as owner of /etc/prometheus/consoles
+  file:
+    path: /etc/prometheus/consoles
+    owner: prometheus
+    group: prometheus
+
+- name: Define prometheus as owner of /etc/prometheus/console_libraries
+  file:
+    path: /etc/prometheus/console_libraries
+    owner: prometheus
+    group: prometheus
+
+- name: Copy prometheus base config file (prometheus.yaml) to /etc/prometheus
+  shell: "cp /home/prometheus/prometheus-*.linux-*/prometheus.yml /etc/prometheus"
+
+- name: Define prometheus as owner of /etc/prometheus/prometheus.yml
+  file:
+    path: /etc/prometheus/prometheus.yml
+    owner: prometheus
+    group: prometheus
