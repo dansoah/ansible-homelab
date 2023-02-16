@@ -32,17 +32,17 @@
     url: "https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable:/cri-o:/{{ crio_version }}/x{{ ansible_distribution }}_{{ ansible_distribution_version }}/Release.key"
     keyring: /usr/share/keyrings/libcontainers-crio-archive-keyring.gpg
     state: present
-
+ 
 - name: Add buster backports GPG key 1
   ansible.builtin.apt_key:
-    keyserver: pgpkeys.mit.edu
-    id: 648ACFD622F3D138
+    keyserver: keyserver.ubuntu.com
+    id: 04EE7237B7D453EC
     state: present
 
 - name: Add buster backports GPG key 2
   ansible.builtin.apt_key:
-    keyserver: pgpkeys.mit.edu
-    id: 0E98404D386FA1D9
+    keyserver: keyserver.ubuntu.com
+    id: 648ACFD622F3D138
     state: present
 
 - name: Update cache
