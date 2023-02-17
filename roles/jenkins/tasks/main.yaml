@@ -1,0 +1,39 @@
+- name: Create jenkins group
+  group:
+    name: jenkins
+    gid: 1210
+
+- name: Create jenkins user
+  user:
+    name: jenkins
+    uid: 1210
+
+- name: Install required packages
+  apt:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - fontconfig 
+    - openjdk-11-jre
+
+- name: Download jenkins GPG key
+  get_url:
+    url: "{{ jenkins_key_url }}"
+    dest: /usr/share/keyrings/jenkins-keyring.asc
+
+- name: Add jenkins repo
+  apt_repository:
+      repo: "deb [signed-by=/usr/share/keyrings/jenkins-keyring.asc] https://pkg.jenkins.io/debian-stable binary/"
+      state: present
+      filename: jenkins.list
+
+- name: Install jenkins
+  apt:
+    name: jenkins
+    state: present
+
+- name: Enable & Start jenkins
+  systemd:
+    name: jenkins-server
+    state: started
+    enabled: true
