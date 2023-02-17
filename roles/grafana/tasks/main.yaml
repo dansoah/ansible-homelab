@@ -1,0 +1,40 @@
+# - name: Create grafana group
+#   group:
+#     name: grafana
+#     gid: 1110
+
+# - name: Create grafana user
+#   user:
+#     name: grafana
+#     uid: 1110
+
+# - name: Install required packages
+#   apt:
+#     name: "{{ item }}"
+#     state: present
+#   loop:
+#     - apt-transport-https
+#     - software-properties-common
+#     - wget
+
+# - name: Download grafana GPG key
+#   get_url:
+#     url: "{{ grafana_key_url }}"
+#     dest: /usr/share/keyrings/grafana.key
+
+# - name: Add grafana repo
+#   apt_repository:
+#       repo: "deb [signed-by=/usr/share/keyrings/grafana.key] https://apt.grafana.com stable main"
+#       state: present
+#       filename: grafana.list
+
+# - name: Install grafana
+#   apt:
+#     name: grafana
+#     state: present
+
+- name: Enable & Start Grafana
+  systemd:
+    name: grafana-server
+    state: started
+    enabled: true
