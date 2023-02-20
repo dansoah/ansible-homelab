@@ -1,0 +1,34 @@
+- name: Create postgres group
+  group:
+    name: postgres
+    gid: 4010
+
+- name: Create postgres user
+  user:
+    name: postgres
+    uid: 4010
+
+- name: Download postgres GPG key
+  get_url:
+    url: "{{ postgres_key_url }}"
+    dest: /usr/share/keyrings/postgres-keyring.asc
+
+- name: Add postgres repo
+  apt_repository:
+      repo: "deb [signed-by=/usr/share/keyrings/postgres-keyring.asc] http://apt.postgresql.org/pub/repos/apt {{ ansible_distribution_release }}-pgdg main"
+      state: present
+      filename: postgres.list
+
+- name: Install postgres
+  apt:
+    name: postgresql-12
+    state: present
+
+- name: Enable & Start postgres
+  systemd:
+    name: postgresql@12-main
+    state: started
+    enabled: true
+
+#update postgresql.conf (listen hosts)
+#update pg_hba (adicionar ips)
