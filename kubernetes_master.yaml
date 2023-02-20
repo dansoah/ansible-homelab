@@ -3,9 +3,11 @@
 - hosts: kubernetes_master
   become: true
   vars:
-    crio_version: 1.18
+    crio_version: 1.24
     kube_version: 1.23.6-00
+    is_node: false
+    k8s_hostname: "{{ ansible_hostname }}"
   roles:
+    - no-swap
     - cri-o
     - kubernetes
-    - argo-cd

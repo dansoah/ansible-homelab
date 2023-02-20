@@ -11,6 +11,6 @@
     keyring: /usr/share/keyrings/kubernetes-archive-keyring.gpg
     state: present
     
-- name: Update cache
-  apt:
-    update_cache: true
+# - name: Update cache
+#   apt:
+#     update_cache: true

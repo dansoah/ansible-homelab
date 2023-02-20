@@ -1,12 +1,12 @@
 kind: InitConfiguration
 apiVersion: kubeadm.k8s.io/v1beta3
 localAPIEndpoint:
-  advertiseAddress: 10.8.0.212
+  advertiseAddress: "{{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}"
   bindPort: 6443
 nodeRegistration:
   criSocket: unix:///var/run/crio/crio.sock
   imagePullPolicy: IfNotPresent
-  name: "{{ ansible_facts.hostname }}.{{ ansible_facts.domain }}"
+  name: "{{ ansible_facts.hostname }}"
   taints:
   - effect: NoSchedule
     key: node-role.kubernetes.io/master
@@ -16,11 +16,11 @@ nodeRegistration:
 kind: ClusterConfiguration
 kubernetesVersion: v1.23.6
 apiServer:
-  timeoutForControlPlane: 4m0s
+  timeoutForControlPlane: 2m0s
 apiVersion: kubeadm.k8s.io/v1beta3
 certificatesDir: /etc/kubernetes/pki
 clusterName: kubernetes
-controlPlaneEndpoint: "{{ ansible_facts.hostname }}.{{ ansible_facts.domain }}:6443"
+controlPlaneEndpoint: "{{ ansible_facts.hostname }}:6443"
 controllerManager: {}
 dns: {}
 etcd:
@@ -28,9 +28,9 @@ etcd:
     dataDir: /var/lib/etcd
 imageRepository: k8s.gcr.io
 networking:
-  dnsDomain: cluster.local
+  dnsDomain: "{{ ansible_facts.hostname }}"
   podSubnet: 10.108.0.1/16
-  serviceSubnet: 10.96.0.0/12
+  serviceSubnet: 10.96.0.0/16
 scheduler: {}
 ---
 kind: KubeletConfiguration

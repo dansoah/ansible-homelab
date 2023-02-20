@@ -16,10 +16,12 @@
     path: "/etc/kubernetes/pki/ca.key"
   register: node_ca
 
-- name: Start kubeadm
+- name: Start kubeadm as master
   include_tasks: kubeadm_init.yaml
-  when: not node_ca.stat.exists
+  when: 'not node_ca.stat.exists and is_node != true'
   run_once: true
 
-
+- name: Start kubeadm as node
+  include_tasks: join_master.yaml
+  when: 'is_node == true'
     

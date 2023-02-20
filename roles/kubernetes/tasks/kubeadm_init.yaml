@@ -1,13 +1,13 @@
 ---
 
 - name: Copy kubeadm config file to remote host
-  copy:
-    src: ./files/kubeadm-config.yaml
-    dest: /home/ubuntu/kubeadm-config.yaml
+  template:
+    src: kubeadm-config.yaml.j2
+    dest: /home/ansible/kubeadm-config.yaml
 
 - name: Init Kubeadm
   become: true
   shell: |
     kubeadm init \
-    --config=/home/ubuntu/kubeadm-config.yaml \
+    --config=/home/ansible/kubeadm-config.yaml \
     --upload-certs
