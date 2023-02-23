@@ -2,7 +2,7 @@
 - name: Copy calico files to remote host
   copy:
     source: ./files/calico.yaml
-    dest: /home/ubuntu/calico.yml
+    dest: /home/ansible/calico.yml
 
 - name: Apply calico on kubernetes
-  shell: kubectl apply /home/ubuntu/calico.yml
+  shell: kubectl apply -f /home/ansible/calico.yml
