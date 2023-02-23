@@ -1,0 +1,12 @@
+- name: Download Node Exporter binary
+  get_url:
+    url: "{{ nodeexporter_download_url }}"
+    dest: "/home/prometheus/node_exporter.tar.gz"
+
+- name: Unarchive Node Exporter binary
+  unarchive:
+    src: "/home/prometheus/node_exporter.tar.gz"
+    dest: "/home/prometheus/"
+    owner: prometheus
+    group: prometheus
+    remote_src: yes

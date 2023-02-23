@@ -1,0 +1,11 @@
+- name: Create Exporter group
+  group:
+    name: exporter
+    gid: 1011
+
+- name: Create Exporter user
+  user:
+    name: exporter
+    uid: 1011
+    shell: /bin/false
+    create_home: false

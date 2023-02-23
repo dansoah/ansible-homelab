@@ -1,0 +1,9 @@
+- name: Pre install tasks
+  block:
+    - import_tasks: create_users.yaml
+    - import_tasks: prepare_nodeexporter_installer.yaml
+
+- name: Install node_exporter
+  block: 
+    - import_tasks: copy_nodeexporter_binaries.yaml
+    - import_tasks: create_nodeexporter_service.yaml
