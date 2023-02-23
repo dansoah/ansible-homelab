@@ -1,2 +1,9 @@
+- name: Get master node token
+  shell: "kubeadm token create --print-join-command --ttl 1m --description \"Joining token for node {{ ansible_facts.hostname }}\""
+  environment: 
+    KUBECONFIG: /etc/kubernetes/admin.conf
+  delegate_to: "{{ master_node }}"
+  register: k8s_join_token
+
 - name: Join master node
-  shell: "kubeadm join --token {{ master_node_join_token }} {{ master_node_addr }}:{{ master_node_port }} --discovery-token-ca-cert-hash {{ master_node_discovery_token }}"
+  shell: "{{ k8s_join_token.stdout }}"
