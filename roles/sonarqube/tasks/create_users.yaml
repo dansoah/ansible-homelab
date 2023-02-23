@@ -1,0 +1,17 @@
+- name: Create sonarqube group
+  group:
+    name: sonarqube
+    gid: 1310
+
+- name: Create sonarqube user
+  user:
+    name: sonarqube
+    uid: 1310
+
+- name: Make sure home folder exists
+  file:
+    path: /home/sonarqube
+    owner: sonarqube
+    group: sonarqube
+    mode: '0750'
+    state: directory

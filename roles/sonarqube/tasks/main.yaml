@@ -1,0 +1,10 @@
+- name: Pre install tasks
+  block:
+    - import_tasks: install_necessary_packages.yaml
+    - import_tasks: create_users.yaml
+    - import_tasks: prepare_sonarqube_installer.yaml
+
+- name: Install sonarqube
+  block:
+    - import_tasks: configure_sonarqube.yaml
+    - import_tasks: create_sonarqube_service.yaml

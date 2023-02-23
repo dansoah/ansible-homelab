@@ -1,0 +1,8 @@
+- name: Install dpendencies
+  apt:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - unzip
+    - openjdk-17-jre
+    

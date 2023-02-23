@@ -1,0 +1,41 @@
+- name: Set database username
+  lineinfile:
+    path: "{{ sonarqube_bin }}/conf/sonar.properties"
+    regexp: ^sonar.jdbc.username
+    line: "sonar.jdbc.username={{ db_username }}"
+    create: yes
+
+- name: Set database password
+  lineinfile:
+    path: "{{ sonarqube_bin }}/conf/sonar.properties"
+    regexp: ^sonar.jdbc.password
+    line: "sonar.jdbc.password={{ db_password }}"
+    create: yes
+
+- name: Set database url
+  lineinfile:
+    path: "{{ sonarqube_bin }}/conf/sonar.properties"
+    regexp: ^sonar.jdbc.url
+    line: "sonar.jdbc.url={{ db_jdbc_url }}"
+    create: yes
+
+- name: Set server host
+  lineinfile:
+    path: "{{ sonarqube_bin }}/conf/sonar.properties"
+    regexp: ^sonar.web.host
+    line: "sonar.web.host={{ server_name }}"
+    create: yes
+
+- name: Set server port
+  lineinfile:
+    path: "{{ sonarqube_bin }}/conf/sonar.properties"
+    regexp: ^sonar.web.port
+    line: "sonar.web.port={{ server_port }}"
+    create: yes
+
+- name: Set server path
+  lineinfile:
+    path: "{{ sonarqube_bin }}/conf/sonar.properties"
+    regexp: ^sonar.web.path
+    line: "sonar.web.path={{ server_path }}"
+    create: yes

@@ -1,0 +1,16 @@
+- name: Download sonarqube binary
+  get_url:
+    url: "{{ sonarqube_download_url }}"
+    dest: "/home/sonarqube/sonarqube.tar.gz"
+
+- name: Unarchive sonarqube binary
+  unarchive:
+    src: "/home/sonarqube/sonarqube.tar.gz"
+    dest: "/home/sonarqube/"
+    remote_src: yes
+    list_files: yes
+  register: extraction
+
+- name: Store extraction path
+  set_fact:
+    sonarqube_bin: "/home/sonarqube/{{ extraction.files[0] }}"
