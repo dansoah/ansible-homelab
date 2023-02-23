@@ -1,14 +1,19 @@
-- name: Get disk state
-  shell: free -h
+- name: Get swap state
+  shell: swapon -s
+  register: swap_state
+  
 
 - name: Disable SWAP
   shell: swapoff -a
+  when: 'swap_state.stdout_lines | length > 1'
 
 - name: Disable SWAP in fstab
   replace:
     path: /etc/fstab
     regexp: '^([^#].*?\sswap\s+sw\s+.*)$'
     replace: '# \1'
+  when: 'swap_state.stdout_lines | length > 1'
 
 - name: Reboot system
   ansible.builtin.reboot:
+  when: 'swap_state.stdout_lines | length > 1'
