@@ -1,0 +1,8 @@
+- name: Copy node_exporter files to /usr/local/bin
+  shell: "cp -p /home/prometheus/node_exporter-*.linux-*/node_exporter /usr/local/bin"
+
+- name: Define exporter as owner of /usr/local/bin/node_exporter
+  file:
+    path: /usr/local/bin/node_exporter
+    owner: exporter
+    group: exporter

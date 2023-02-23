@@ -1,0 +1,21 @@
+- name: Create Prometheus group
+  group:
+    name: prometheus
+    gid: 1010
+
+- name: Create Prometheus user
+  user:
+    name: prometheus
+    uid: 1010
+
+- name: Create Exporter group
+  group:
+    name: exporter
+    gid: 1011
+
+- name: Create Exporter user
+  user:
+    name: exporter
+    uid: 1011
+    shell: /bin/false
+    create_home: false
