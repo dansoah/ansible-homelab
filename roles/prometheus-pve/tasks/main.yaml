@@ -1,0 +1,22 @@
+- name: Install dependencies
+  apt:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - python3
+    - python3-pip
+
+- name: Install prometheus-pve-exporter
+  shell: pip3 install prometheus-pve-exporter
+
+- name: Add PVE config file
+  template:
+    src: pve.yaml.j2
+    dest: /etc/prometheus/pve.yml
+
+- name: Starts PVE node exporter service
+  systemd:
+    state: restarted
+    enabled: true
+    daemon_reload: true
+    name: prometheus-pve-exporter
