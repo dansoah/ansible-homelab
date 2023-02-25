@@ -1,0 +1,26 @@
+- name: Install GPG package
+  apt:
+    name: gnupg
+    state: present 
+
+- name: Get Keys
+  ansible.builtin.apt_key:
+    keyserver: keyserver.ubuntu.com
+    id: 5DE6FD698AD6FDD2
+    state: present
+
+- name: Add repo
+  ansible.builtin.apt_repository:
+    repo: "deb https://repo.krakend.io/apt stable main"
+    state: present
+    update_cache: false
+  register: add_libcontainers_repo
+
+- name: Update cache
+  apt:
+    update_cache: true
+
+- name: Update cache
+  apt:
+    name: krakend
+    state: present
