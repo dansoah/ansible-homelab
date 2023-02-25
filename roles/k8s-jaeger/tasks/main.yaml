@@ -1,0 +1,6 @@
+- name: Apply Jaeger operator
+  kubernetes.core.k8s:
+    state: present
+    template: jaeger-operator.yaml.j2
+  environment: 
+    KUBECONFIG: /etc/kubernetes/admin.conf
