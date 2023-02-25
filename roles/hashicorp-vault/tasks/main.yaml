@@ -1,0 +1,22 @@
+- name: Install GPG package
+  apt:
+    name: gnupg
+    state: present 
+
+- name: Add hasicorp key
+  ansible.builtin.apt_key:
+    url: "https://apt.releases.hashicorp.com/gpg"
+    keyring: /usr/share/keyrings/hashicorp-archive-keyring.gpg
+    state: present
+
+- name: Add repo
+  ansible.builtin.apt_repository:
+    repo: "deb [signed-by=/usr/share/keyrings/hashicorp-archive-keyring.gpg] https://apt.releases.hashicorp.com {{ ansible_distribution_release }} main"
+    state: present
+    update_cache: true
+  register: add_libcontainers_repo
+
+- name: Install vault
+  apt:
+    name: vault
+    state: present
