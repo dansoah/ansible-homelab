@@ -1,0 +1,8 @@
+- name: Install packages
+  apt:
+    name: "{{ item }}"
+    state: present
+  loop:
+    - unzip
+    - openjdk-17-jre
+    

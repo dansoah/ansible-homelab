@@ -1,0 +1,18 @@
+- name: Create keycloak group
+  group:
+    name: keycloak
+    state: present
+    gid: 1430
+
+- name: Create keycloak user
+  user:
+    name: keycloak
+    state: present
+    uid: 1430
+
+- name: Create keycloak home
+  file:
+    path: /home/keycloak
+    owner: keycloak
+    group: keycloak
+    mode: 0755

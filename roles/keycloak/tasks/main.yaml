@@ -1,0 +1,13 @@
+- import_tasks: install_dependencies.yaml
+
+- name: Install keycloak
+  block:
+    - import_tasks: create_users.yaml
+    - import_tasks: prepare_executable_file.yaml
+
+- name: Run keycloak
+  block:
+    - import_tasks: copy_service.yaml
+    - import_tasks: start_service.yaml
+
+

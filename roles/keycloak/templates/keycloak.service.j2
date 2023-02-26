@@ -1,0 +1,21 @@
+[Unit]
+Description=Keycloak
+Wants=network-online.target
+After=network-online.target
+
+[Service]
+User=keycloak
+Group=keycloak
+Type=simple
+ExecStart=/home/keycloak/{{ keycloak_installer_location }}bin/kc.sh start \
+    --db postgres \
+    --db-url-host {{ db_host }} \
+    --db-username {{ db_username }} \
+    --db-password {{ db_password }} \
+    --db-schema {{ db_schema }} \
+    --hostname-url {{ hostname_url }} \
+    --https-certificate-file=/home/keycloak/server.cert \
+    --https-certificate-key-file=/home/keycloak/server.key
+
+[Install]
+WantedBy=multi-user.target

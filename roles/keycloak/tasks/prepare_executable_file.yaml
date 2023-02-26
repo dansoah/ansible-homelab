@@ -1,0 +1,23 @@
+- name: Download keycloak zip file
+  get_url:
+    url: "{{ keycloak_download_url }}"
+    dest: /home/keycloak/installer.zip
+    owner: keycloak
+    group: keycloak
+    mode: 0750
+
+- name: Unzip keycloak installer
+  unarchive:
+    src: /home/keycloak/installer.zip
+    dest: /home/keycloak/
+    remote_src: yes
+    owner: keycloak
+    group: keycloak
+    mode: 0750
+    list_files: true
+  register: installer_unzip_result
+
+- name: Set installer location
+  set_fact:
+    keycloak_installer_location: "{{ installer_unzip_result.files[0] }}"
+
